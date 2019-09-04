@@ -3,18 +3,16 @@
 # SPDX-License-Identifier: Apache-2.0
 #
 
-version: '3.4'
+version: "3.4"
 
 volumes:
   peer0.org2.example.com:
   peer1.org2.example.com:
-  
+
 networks:
   bymn:
     external:
       name: $SWARM_NETWORK
-    
-
 
 services:
   ca2:
@@ -25,25 +23,25 @@ services:
       - FABRIC_CA_SERVER_TLS_ENABLED=true
       - FABRIC_CA_SERVER_CA_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.org2.example.com-cert.pem
       - FABRIC_CA_SERVER_TLS_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.org2.example.com-cert.pem
-      - FABRIC_CA_SERVER_CA_KEYFILE=/etc/hyperledger/fabric-ca-server-config/CA2_PRIVATE_KEY
-      - FABRIC_CA_SERVER_TLS_KEYFILE=/etc/hyperledger/fabric-ca-server-config/CA2_PRIVATE_KEY
+      - FABRIC_CA_SERVER_CA_KEYFILE=/etc/hyperledger/fabric-ca-server-config/c07cc9ada259b91988a477992e989abbded5a6d2182bf4bc71f5838272550dc7_sk
+      - FABRIC_CA_SERVER_TLS_KEYFILE=/etc/hyperledger/fabric-ca-server-config/c07cc9ada259b91988a477992e989abbded5a6d2182bf4bc71f5838272550dc7_sk
     command: sh -c 'fabric-ca-server start --ca.certfile /etc/hyperledger/fabric-ca-server-config/ca.org2.example.com-cert.pem --ca.keyfile /etc/hyperledger/fabric-ca-server-config/CA2_PRIVATE_KEY  -b admin:adminpw -d'
     volumes:
       - ./crypto-config/peerOrganizations/org2.example.com/ca/:/etc/hyperledger/fabric-ca-server-config
     container_name: ca2
     deploy:
-            mode: replicated
-            replicas: 1
-            restart_policy:
-              condition: on-failure
-            placement:
-                constraints:
-                    - node.hostname == $ORG2_HOSTNAME
+      mode: replicated
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+      placement:
+        constraints:
+          - node.hostname == $ORG2_HOSTNAME
 
     ports:
-     - published: 7054
-       target: 7054
-       mode: host
+      - published: 7054
+        target: 7054
+        mode: host
     networks:
       bymn:
         aliases:
@@ -78,28 +76,28 @@ services:
     command: peer node start
 
     volumes:
-        - /var/run/:/host/var/run/
-        - ./crypto-config/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/msp:/etc/hyperledger/fabric/msp
-        - ./crypto-config/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls:/etc/hyperledger/fabric/tls
-        #- ./crypto-config/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/ca:/etc/hyperledger/fabric/ca
-        - peer0.org2.example.com:/var/hyperledger/production
-    
+      - /var/run/:/host/var/run/
+      - ./crypto-config/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/msp:/etc/hyperledger/fabric/msp
+      - ./crypto-config/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls:/etc/hyperledger/fabric/tls
+      #- ./crypto-config/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/ca:/etc/hyperledger/fabric/ca
+      - peer0.org2.example.com:/var/hyperledger/production
+
     deploy:
-            mode: replicated
-            replicas: 1
-            restart_policy:
-              condition: on-failure
-            placement:
-                constraints:
-                    - node.hostname == $ORG2_HOSTNAME
+      mode: replicated
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+      placement:
+        constraints:
+          - node.hostname == $ORG2_HOSTNAME
 
     ports:
-            - published: 7051
-              target: 7051
-              mode: host
-            - published: 7053
-              target: 7053
-              mode: host
+      - published: 7051
+        target: 7051
+        mode: host
+      - published: 7053
+        target: 7053
+        mode: host
     networks:
       bymn:
         aliases:
@@ -134,28 +132,28 @@ services:
     command: peer node start
 
     volumes:
-        - /var/run/:/host/var/run/
-        - ./crypto-config/peerOrganizations/org2.example.com/peers/peer1.org2.example.com/msp:/etc/hyperledger/fabric/msp
-        - ./crypto-config/peerOrganizations/org2.example.com/peers/peer1.org2.example.com/tls:/etc/hyperledger/fabric/tls
-        #- ./crypto-config/peerOrganizations/org2.example.com/peers/peer1.org2.example.com/ca:/etc/hyperledger/fabric/ca
-        - peer1.org2.example.com:/var/hyperledger/production
-    
+      - /var/run/:/host/var/run/
+      - ./crypto-config/peerOrganizations/org2.example.com/peers/peer1.org2.example.com/msp:/etc/hyperledger/fabric/msp
+      - ./crypto-config/peerOrganizations/org2.example.com/peers/peer1.org2.example.com/tls:/etc/hyperledger/fabric/tls
+      #- ./crypto-config/peerOrganizations/org2.example.com/peers/peer1.org2.example.com/ca:/etc/hyperledger/fabric/ca
+      - peer1.org2.example.com:/var/hyperledger/production
+
     deploy:
-            mode: replicated
-            replicas: 1
-            restart_policy:
-              condition: on-failure
-            placement:
-                constraints:
-                    - node.hostname == $ORG2_HOSTNAME
+      mode: replicated
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+      placement:
+        constraints:
+          - node.hostname == $ORG2_HOSTNAME
 
     ports:
-            - published: 8051
-              target: 7051
-              mode: host
-            - published: 8053
-              target: 7053
-              mode: host
+      - published: 8051
+        target: 7051
+        mode: host
+      - published: 8053
+        target: 7053
+        mode: host
     networks:
       bymn:
         aliases:
@@ -167,16 +165,15 @@ services:
     tty: true
     stdin_open: true
     deploy:
-            mode: replicated
-            replicas: 1
-            restart_policy:
-              condition: on-failure
-            placement:
-                constraints:
-                    - node.hostname == $ORG2_HOSTNAME
+      mode: replicated
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+      placement:
+        constraints:
+          - node.hostname == $ORG2_HOSTNAME
 
     environment:
-
       - GOPATH=/opt/gopath
       - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
       - CORE_LOGGING_LEVEL=DEBUG
@@ -192,10 +189,10 @@ services:
     working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
     command: /bin/bash
     volumes:
-        - /var/run/:/host/var/run/
-        - ./chaincode/:/opt/gopath/src/github.com/chaincode
-        - ./crypto-config:/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/
-        - ./scripts:/opt/gopath/src/github.com/hyperledger/fabric/peer/scripts/
-        - ./channel-artifacts:/opt/gopath/src/github.com/hyperledger/fabric/peer/channel-artifacts
+      - /var/run/:/host/var/run/
+      - ./chaincode/:/opt/gopath/src/github.com/chaincode
+      - ./crypto-config:/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/
+      - ./scripts:/opt/gopath/src/github.com/hyperledger/fabric/peer/scripts/
+      - ./channel-artifacts:/opt/gopath/src/github.com/hyperledger/fabric/peer/channel-artifacts
     networks:
       - bymn

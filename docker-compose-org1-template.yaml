@@ -23,8 +23,8 @@ services:
       - FABRIC_CA_SERVER_CA_NAME=ca.org1.example.com
       - FABRIC_CA_SERVER_TLS_ENABLED=false
       - FABRIC_CA_SERVER_CA_CERTFILE=/var/hyperledger/fabric-ca-server-config/ca.org1.example.com-cert.pem
-      - FABRIC_CA_SERVER_CA_KEYFILE=/var/hyperledger/fabric-ca-server-config/0494e765b1d20b70271c437b80fc1472f510460a8d7760dbecad365a56f200d8_sk
-    command: sh -c 'fabric-ca-server start --ca.certfile /var/hyperledger/fabric-ca-server-config/ca.org1.example.com-cert.pem --ca.keyfile /var/hyperledger/fabric-ca-server-config/0494e765b1d20b70271c437b80fc1472f510460a8d7760dbecad365a56f200d8_sk  -b admin:adminpw -d'
+      - FABRIC_CA_SERVER_CA_KEYFILE=/var/hyperledger/fabric-ca-server-config/7e95e672e89574ff5a687521dc1985e4945ae479edc8b084c38ce8a510a09303_sk
+    command: sh -c 'fabric-ca-server start --ca.certfile /var/hyperledger/fabric-ca-server-config/ca.org1.example.com-cert.pem --ca.keyfile /var/hyperledger/fabric-ca-server-config/7e95e672e89574ff5a687521dc1985e4945ae479edc8b084c38ce8a510a09303_sk  -b admin:adminpw -d'
     volumes:
       - ./crypto-config/peerOrganizations/org1.example.com/ca/:/var/hyperledger/fabric-ca-server-config
     deploy:
